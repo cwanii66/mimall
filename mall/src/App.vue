@@ -8,6 +8,27 @@
   </div>
 </template>
 
+<script>
+// import axios from 'axios'
+import jsonp from 'jsonp'
+export default {
+  data() {
+    return {
+      data: {}
+    }
+  },
+
+  mounted() {
+    const url = '/activity/servicetime'
+    jsonp(url, (err, res) => {
+      let result = res;
+      this.data = result;
+      console.log(this.data);
+    })
+  },
+}
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
