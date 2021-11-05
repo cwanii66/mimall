@@ -24,7 +24,64 @@
                 <div class="header-menu">
                     <div class="item-menu">
                         <span>小米手机</span>
-                        <div class="children"></div>
+                        <div class="children">
+                            <ul>
+                                <li class="product">
+                                    <a href="javascript:;" target="_blank">
+                                        <div class="pro-img">
+                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/8cad77bda138fd94eadbc2ddfced7c56.png?thumb=1&w=200&h=138&f=webp&q=90" alt="default">
+                                        </div>
+                                        <div class="pro-name">小米cc9</div>
+                                        <div class="pro-price">￥1799</div>
+                                    </a>
+                                </li>
+                                <li class="product">
+                                    <a href="javascript:;" target="_blank">
+                                        <div class="pro-img">
+                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/8cad77bda138fd94eadbc2ddfced7c56.png?thumb=1&w=200&h=138&f=webp&q=90" alt="default">
+                                        </div>
+                                        <div class="pro-name">小米cc9</div>
+                                        <div class="pro-price">￥1799</div>
+                                    </a>
+                                </li>
+                                <li class="product">
+                                    <a href="javascript:;" target="_blank">
+                                        <div class="pro-img">
+                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/8cad77bda138fd94eadbc2ddfced7c56.png?thumb=1&w=200&h=138&f=webp&q=90" alt="default">
+                                        </div>
+                                        <div class="pro-name">小米cc9</div>
+                                        <div class="pro-price">￥1799</div>
+                                    </a>
+                                </li>
+                                <li class="product">
+                                    <a href="javascript:;" target="_blank">
+                                        <div class="pro-img">
+                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/8cad77bda138fd94eadbc2ddfced7c56.png?thumb=1&w=200&h=138&f=webp&q=90" alt="default">
+                                        </div>
+                                        <div class="pro-name">小米cc9</div>
+                                        <div class="pro-price">￥1799</div>
+                                    </a>
+                                </li>
+                                <li class="product">
+                                    <a href="javascript:;" target="_blank">
+                                        <div class="pro-img">
+                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/8cad77bda138fd94eadbc2ddfced7c56.png?thumb=1&w=200&h=138&f=webp&q=90" alt="default">
+                                        </div>
+                                        <div class="pro-name">小米cc9</div>
+                                        <div class="pro-price">￥1799</div>
+                                    </a>
+                                </li>
+                                <li class="product">
+                                    <a href="javascript:;" target="_blank">
+                                        <div class="pro-img">
+                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/8cad77bda138fd94eadbc2ddfced7c56.png?thumb=1&w=200&h=138&f=webp&q=90" alt="default">
+                                        </div>
+                                        <div class="pro-name">小米cc9</div>
+                                        <div class="pro-price">￥1799</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="item-menu">
                         <span>Redmi红米</span>
@@ -49,6 +106,29 @@
 <script>
 export default {
     name: 'nav-header',
+    data() {
+        return {
+            username: 'jack',
+            phoneList: []
+        }
+    },
+    mounted() {
+        this.getProductList();
+        
+    },
+    methods: {
+        getProductList() {
+            this.axios.get('/products', {
+                params: {
+                    categoryId: '100012'
+                }
+            }).then((res) => {
+                if (res.list > 6) {
+                    this.phoneList = res.list.slice(0, 6);
+                }
+            })
+        }
+    },
 
 }
 </script>
@@ -56,6 +136,7 @@ export default {
 <style lang="scss">
     @import './../assets/scss/base.scss';
     @import './../assets/scss/mixin.scss';
+    @import './../assets/scss/config.scss';
 
     .header {
         .nav-top-bar {
@@ -89,6 +170,7 @@ export default {
 
         .nav-header {
             .container {
+                position: relative;
                 height: 112px;
                 @include flex();
                 .header-logo {
@@ -132,6 +214,81 @@ export default {
 
                         span {
                             cursor: pointer;
+                        }
+                        &:hover {
+                            color: $colorA;
+                            .children {
+                                height: 220px;
+                                // display: block;
+                                opacity: 1;
+                            }
+                        }
+                        .children {                            
+                            position: absolute;
+                            top: 112px;
+                            left: 0;
+                            width: 1226px;
+                            height: 0;
+                            // display: none;
+                            opacity: 0;
+                            overflow: hidden;
+                            border-top: 1px solid #E5E5E5;
+                            box-shadow: 0 7px 6px 0 rgba(0, 0, 0, .11);
+                            z-index: 999;
+                            transition: height 600ms ease;
+
+                            ul {
+                                display: inline-grid;
+                                width: inherit;
+                                grid-template-columns: repeat(6, 1fr);
+                                grid-template-rows: 220px;
+                                place-items: center center;
+                            }
+                            .product {
+                                display: flex;
+                                align-items: center;
+                                height: 220px;
+                                font-size: 12px;
+                                line-height: 12px;
+                                position: relative;
+                                a {
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                }
+                                img {
+                                    height: 111px;
+                                    width: auto;
+                                    
+                                }
+                                .pro-img {
+                                    box-sizing: border-box;
+                                    height: 137px;
+                                    padding-top: 12px;
+                                }
+                                .pro-name {
+                                    margin-bottom: 8px;
+                                    
+                                    color: $colorB;
+                                }
+                                .pro-price {
+                                    color: $colorA;
+                                }
+
+                                &::before {
+                                    content: '';
+                                    position: absolute;
+                                    top: 42px;
+                                    right: -24px;
+                                    border-left: 1px solid $colorF;
+                                    height: 110px;
+                                    width: 1px;
+                                }
+                                &:last-child::before {
+                                    display: none;
+                                }
+                            }
+                            
                         }
                     }
                 }
