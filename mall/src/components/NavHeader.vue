@@ -26,58 +26,16 @@
                         <span>小米手机</span>
                         <div class="children">
                             <ul>
-                                <li class="product">
-                                    <a href="javascript:;" target="_blank">
+                                <li class="product"
+                                    v-for="(item, index) in phoneList"
+                                    :key="index" 
+                                >
+                                    <a :href="'/#/product/' + item.id" target="_blank">
                                         <div class="pro-img">
-                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/8cad77bda138fd94eadbc2ddfced7c56.png?thumb=1&w=200&h=138&f=webp&q=90" alt="default">
+                                            <img :src="item.mainImage" alt="item.subtitle">
                                         </div>
-                                        <div class="pro-name">小米cc9</div>
-                                        <div class="pro-price">￥1799</div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="javascript:;" target="_blank">
-                                        <div class="pro-img">
-                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/8cad77bda138fd94eadbc2ddfced7c56.png?thumb=1&w=200&h=138&f=webp&q=90" alt="default">
-                                        </div>
-                                        <div class="pro-name">小米cc9</div>
-                                        <div class="pro-price">￥1799</div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="javascript:;" target="_blank">
-                                        <div class="pro-img">
-                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/8cad77bda138fd94eadbc2ddfced7c56.png?thumb=1&w=200&h=138&f=webp&q=90" alt="default">
-                                        </div>
-                                        <div class="pro-name">小米cc9</div>
-                                        <div class="pro-price">￥1799</div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="javascript:;" target="_blank">
-                                        <div class="pro-img">
-                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/8cad77bda138fd94eadbc2ddfced7c56.png?thumb=1&w=200&h=138&f=webp&q=90" alt="default">
-                                        </div>
-                                        <div class="pro-name">小米cc9</div>
-                                        <div class="pro-price">￥1799</div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="javascript:;" target="_blank">
-                                        <div class="pro-img">
-                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/8cad77bda138fd94eadbc2ddfced7c56.png?thumb=1&w=200&h=138&f=webp&q=90" alt="default">
-                                        </div>
-                                        <div class="pro-name">小米cc9</div>
-                                        <div class="pro-price">￥1799</div>
-                                    </a>
-                                </li>
-                                <li class="product">
-                                    <a href="javascript:;" target="_blank">
-                                        <div class="pro-img">
-                                            <img src="https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/8cad77bda138fd94eadbc2ddfced7c56.png?thumb=1&w=200&h=138&f=webp&q=90" alt="default">
-                                        </div>
-                                        <div class="pro-name">小米cc9</div>
-                                        <div class="pro-price">￥1799</div>
+                                        <div class="pro-name">{{ item.name }}</div>
+                                        <div class="pro-price">{{ currency(item.price) }}</div>
                                     </a>
                                 </li>
                             </ul>
@@ -112,10 +70,20 @@ export default {
             phoneList: []
         }
     },
+
+    created() {
+
+    },
+
     mounted() {
         this.getProductList();
-        
+
     },
+
+    computed: {
+    
+    },
+
     methods: {
         getProductList() {
             this.axios.get('/products', {   // get 传参用params， post传参直接传
@@ -123,10 +91,15 @@ export default {
                     categoryId: '100012'
                 }
             }).then((res) => {
-                if (res.list > 6) {
+                if (res.list.length > 6) {
                     this.phoneList = res.list.slice(0, 6);
                 }
             })
+        },
+
+        currency(val) {
+            if (!val) return 0.00
+            return '￥ ' + val.toFix(2)
         }
     },
 
