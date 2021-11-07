@@ -118,7 +118,7 @@ export default {
     },
     methods: {
         getProductList() {
-            this.axios.get('/products', {
+            this.axios.get('/products', {   // get 传参用params， post传参直接传
                 params: {
                     categoryId: '100012'
                 }
