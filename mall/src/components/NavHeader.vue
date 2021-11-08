@@ -101,7 +101,7 @@ export default {
         },
 
         goToCart() {
-            this.$router.push('/cart')
+            this.$router.push('/cart')   // 路由跳转方法 vue 2.x
         },
 
         login() {
