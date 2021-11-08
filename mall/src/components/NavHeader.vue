@@ -94,9 +94,7 @@ export default {
                     pageSize: 6
                 }
             }).then((res) => {
-                if (res.list.length >= 6) {
-                    this.phoneList = res.list.slice(0, 6);
-                }
+                this.phoneList = res.list;
             })
         },
 
@@ -195,7 +193,6 @@ export default {
                         font-size: 16px;
                         line-height: 112px;
                         margin-right: 12px;
-
                         span {
                             cursor: pointer;
                         }
@@ -220,6 +217,7 @@ export default {
                             box-shadow: 0 7px 6px 0 rgba(0, 0, 0, .11);
                             z-index: 999;
                             transition: height 600ms ease;
+                            background-color: white;
 
                             ul {
                                 display: inline-grid;
