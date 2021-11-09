@@ -6,29 +6,60 @@
                 <div class="nav-menu">
                     <ul class="menu-wrap">
                         <li class="menu-item">
-                            <a href="javascript:;">手机 电话卡</a>
-                            <!-- <div class="children"></div> -->
+                            <a href="javascript:;" class="menu-item-link">手机 电话卡</a>
+                            <div class="children">
+                                <ul
+                                    v-for="(item, index) in menuList"
+                                    :key="index"
+                                >
+                                    <li
+                                        v-for="(subItem, subIndex) in item"
+                                        :key="subIndex"
+                                    >
+                                        <a :href=" '/#/product' + subItem.id">
+                                            <img :src="subItem.img" alt="#">
+                                            {{ subItem.name }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="menu-item" >
+                            <a href="javascript:;" class="menu-item-link">电视 盒子</a>
+                            <div class="children">
+                                <ul
+                                    v-for="(item, index) in menuList"
+                                    :key="index"
+                                >
+                                    <li
+                                        v-for="(subItem, subIndex) in item"
+                                        :key="subIndex"
+                                    >
+                                        <a :href=" '/#/product' + subItem.id">
+                                            <img :src="subItem.img" alt="#">
+                                            {{ subItem.name }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                         <li class="menu-item">
-                            <a href="javascript:;">电视 盒子</a>
+                            <a href="javascript:;" class="menu-item-link">笔记本 平板</a>
                         </li>
                         <li class="menu-item">
-                            <a href="javascript:;">笔记本 平板</a>
+                            <a href="javascript:;" class="menu-item-link">家电 插线板</a>
                         </li>
                         <li class="menu-item">
-                            <a href="javascript:;">家电 插线板</a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="javascript:;">出行 穿戴</a>
+                            <a href="javascript:;" class="menu-item-link">出行 穿戴</a>
                         </li>                        
                         <li class="menu-item">
-                            <a href="javascript:;">电源 配件</a>
+                            <a href="javascript:;" class="menu-item-link">电源 配件</a>
                         </li>
                         <li class="menu-item">
-                            <a href="javascript:;">智能 路由器</a>
+                            <a href="javascript:;" class="menu-item-link">智能 路由器</a>
                         </li>
                         <li class="menu-item">
-                            <a href="javacript:;">生活 箱包</a>
+                            <a href="javacript:;" class="menu-item-link">生活 箱包</a>
                         </li>
                     </ul>
                 </div>
@@ -112,6 +143,123 @@ export default {
                     id: '',
                     img: '/imgs/slider/slide-5.jpg'
                 }
+            ],
+
+            menuList: [
+                [
+                    {
+                        id: 30,
+                        img: '/imgs/item-box-1.png',
+                        name: '小米CC9',
+                    },{
+                        id: 31,
+                        img: '/imgs/item-box-2.png',
+                        name: '小米8青春版',
+                    },{
+                        id: 32,
+                        img: '/imgs/item-box-3.jpg',
+                        name: 'Redmi K20 Pro' 
+                    },{
+                        id: 33,
+                        img: '/imgs/item-box-2.png',
+                        name: '移动4G专区',
+                    }
+                ], 
+                [                    
+                    {
+                        id: 30,
+                        img: '/imgs/item-box-1.png',
+                        name: '小米CC9',
+                    },{
+                        id: 31,
+                        img: '/imgs/item-box-2.png',
+                        name: '小米8青春版',
+                    },{
+                        id: 32,
+                        img: '/imgs/item-box-3.jpg',
+                        name: 'Redmi K20 Pro' 
+                    },{
+                        id: 33,
+                        img: '/imgs/item-box-2.png',
+                        name: '移动4G专区',
+                    }
+                ], 
+                [                    
+                    {
+                        id: 30,
+                        img: '/imgs/item-box-1.png',
+                        name: '小米CC9',
+                    },{
+                        id: 31,
+                        img: '/imgs/item-box-2.png',
+                        name: '小米8青春版',
+                    },{
+                        id: 32,
+                        img: '/imgs/item-box-3.jpg',
+                        name: 'Redmi K20 Pro' 
+                    },{
+                        id: 33,
+                        img: '/imgs/item-box-2.png',
+                        name: '移动4G专区',
+                    }
+                ], 
+                [
+                    {
+                        id: 30,
+                        img: '/imgs/item-box-1.png',
+                        name: '小米CC9',
+                    },{
+                        id: 31,
+                        img: '/imgs/item-box-2.png',
+                        name: '小米8青春版',
+                    },{
+                        id: 32,
+                        img: '/imgs/item-box-3.jpg',
+                        name: 'Redmi K20 Pro' 
+                    },{
+                        id: 33,
+                        img: '/imgs/item-box-2.png',
+                        name: '移动4G专区',
+                    }
+                ], 
+                [
+                    {
+                        id: 30,
+                        img: '/imgs/item-box-1.png',
+                        name: '小米CC9',
+                    },{
+                        id: 31,
+                        img: '/imgs/item-box-2.png',
+                        name: '小米8青春版',
+                    },{
+                        id: 32,
+                        img: '/imgs/item-box-3.jpg',
+                        name: 'Redmi K20 Pro' 
+                    },{
+                        id: 33,
+                        img: '/imgs/item-box-2.png',
+                        name: '移动4G专区',
+                    }
+                ], 
+                [
+                    {
+                        id: 30,
+                        img: '/imgs/item-box-1.png',
+                        name: '小米CC9',
+                    },{
+                        id: 31,
+                        img: '/imgs/item-box-2.png',
+                        name: '小米8青春版',
+                    },{
+                        id: 32,
+                        img: '/imgs/item-box-3.jpg',
+                        name: 'Redmi K20 Pro' 
+                    },{
+                        id: 33,
+                        img: '/imgs/item-box-2.png',
+                        name: '移动4G专区',
+                    }
+                ]
             ]
         }
     },
@@ -154,7 +302,7 @@ export default {
                         height: 51px;
                         line-height: 51px;
                         
-                        a {                        
+                        .menu-item-link {                        
                             position: relative;
                             display: block;
                             font-size: 16px;
@@ -168,9 +316,51 @@ export default {
                                 content: '';
                                 @include bgImg(10px, 15px, '/imgs/icon-arrow.png');
                             }
+                        }
+                        &:hover {
+                            background-color: $colorA;
+                            .children {
+                                display: block;
+                            }
+                        }
+                    }
+                    .children {
+                        box-sizing: border-box;
+                        width: 962px;
+                        height: 460px;
+                        background-color: $colorG;
+                        position: absolute;
+                        top: 0;
+                        left: 264px;
+                        border: 1px solid $colorH;
 
-                            &:hover {
-                                background-color: $colorA;
+                        display: none;
+
+                        ul {
+                            display: flex;
+                            height: 76.5px;
+                            justify-content: space-between;
+                            align-items: center;
+
+                            li {
+                                height: 76.5px;
+                                line-height: 76.5px;
+                                flex: 1;
+                                padding-left: 23px;
+
+                                a {
+                                    display: inline-block;
+                                    color: $colorB;
+                                    font-size: 14px;
+                                }
+
+                                img {
+                                    vertical-align: middle;
+                                    width: 42px;
+                                    height: 35px;
+                                    margin-right: 15px;
+                                }
+
                             }
                         }
                     }
