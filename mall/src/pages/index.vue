@@ -2,7 +2,6 @@
     <div class="main-content">
         <div class="container">
             <div class="swiper-box">
-
                 <div class="nav-menu">
                     <ul class="menu-wrap">
                         <li class="menu-item">
@@ -16,7 +15,7 @@
                                         v-for="(subItem, subIndex) in item"
                                         :key="subIndex"
                                     >
-                                        <a :href=" '/#/product' + subItem.id">
+                                        <a :href=" '/#/product/' + subItem.id">
                                             <img :src="subItem.img" alt="#">
                                             {{ subItem.name }}
                                         </a>
@@ -35,7 +34,7 @@
                                         v-for="(subItem, subIndex) in item"
                                         :key="subIndex"
                                     >
-                                        <a :href=" '/#/product' + subItem.id">
+                                        <a :href=" '/#/product/' + subItem.id">
                                             <img :src="subItem.img" alt="#">
                                             {{ subItem.name }}
                                         </a>
@@ -69,9 +68,8 @@
                         v-for="(item, index) in slideList"
                         :key="index"
                     >
-                        <a :href="'/#/product' + item.id"><img :src="item.img" alt="#"></a>
+                        <a :href="'/#/product/' + item.id"><img :src="item.img" alt="#"></a>
                     </swiper-slide>
-
                     <!-- Optional controls -->
                     <div class="swiper-pagination" slot="pagination"></div>
                     <div class="swiper-button-prev" slot="button-prev"></div>
@@ -79,14 +77,51 @@
                 </swiper>
             </div>
             <div class="ads-box">
-
+                <a :href="'/#/product/' + item.id"
+                    v-for="(item, index) in adsList"
+                    :key="index"  
+                >
+                    <img :src="item.img" alt="">
+                </a>
             </div>
             <div class="banner">
-
+                <a href="/#/product/30">
+                    <img src="/imgs/banner-1.png" alt="banner">
+                </a>
             </div>
-            <div class="product-box">
-
-            </div>
+        </div>
+        <div class="product-box">
+            <div class="container">
+                <h2>手机品类</h2>
+                <div class="wrapper">
+                    <div class="banner-left">
+                        <a href="/#/product/35">
+                            <img src="/imgs/mix-alpha.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="list-box">
+                        <div class="list"
+                            v-for="(arr, index) in phoneList"
+                            :key="index"
+                        >
+                            <div class="item"
+                                v-for="(item, itemIndex) in arr"
+                                :key="itemIndex"
+                            >
+                                <span :class="isNewPhone(itemIndex)">新品</span>
+                                <div class="item-img">
+                                    <img :src="item.mainImage" alt="fake">
+                                </div>
+                                <div class="item-info">
+                                    <h3> {{ item.name }} </h3>
+                                    <p> {{ item.subtitle }} </p>
+                                    <p class="price">{{ item.price }}元</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>    
         </div>
         <service-bar></service-bar>
     </div>
@@ -100,6 +135,12 @@ import 'swiper/css/swiper.css'
 
 export default {
     name: 'index',
+
+    components: {
+        ServiceBar,
+        Swiper,
+        SwiperSlide
+    },
 
     data() {
         return {
@@ -122,6 +163,7 @@ export default {
                     prevEl: '.swiper-button-prev',
                 }
             },
+
             slideList: [
                 {
                     id: '42',
@@ -260,15 +302,49 @@ export default {
                         name: '移动4G专区',
                     }
                 ]
-            ]
+            ],
+            
+            adsList: [
+                {
+                    id: 33,
+                    img: '/imgs/ads/ads-1.png'
+                },{
+                    id: 48,
+                    img: '/imgs/ads/ads-2.jpg'
+                },{
+                    id: 45,
+                    img: '/imgs/ads/ads-3.png'
+                },{
+                    id: 47,
+                    img: '/imgs/ads/ads-4.jpg'
+                }
+            ],
+
+            phoneList: [],
         }
     },
 
-    components: {
-        ServiceBar,
-        Swiper,
-        SwiperSlide
+    mounted() {
+        this.init();
     },
+
+    methods: {
+        init() {
+            this.axios.get('/products', {
+                params: {
+                    categoryId:100012,
+                    pageSize:8
+                }
+            }).then((res) => {
+                this.phoneList = [res.list.slice(0, 4), res.list.slice(4, 8)]
+            })
+        },
+        isNewPhone(index) {
+            return index % 2 === 0 ? 'new-pro' : 'kill-pro'
+        }
+    },
+
+
     directives: {
         swiper: directive
     }
@@ -323,44 +399,45 @@ export default {
                                 display: block;
                             }
                         }
-                    }
-                    .children {
-                        box-sizing: border-box;
-                        width: 962px;
-                        height: 460px;
-                        background-color: $colorG;
-                        position: absolute;
-                        top: 0;
-                        left: 264px;
-                        border: 1px solid $colorH;
 
-                        display: none;
+                        .children {
+                            box-sizing: border-box;
+                            width: 962px;
+                            height: 460px;
+                            background-color: $colorG;
+                            position: absolute;
+                            top: 0;
+                            left: 264px;
+                            border: 1px solid $colorH;
 
-                        ul {
-                            display: flex;
-                            height: 76.5px;
-                            justify-content: space-between;
-                            align-items: center;
+                            display: none;
 
-                            li {
+                            ul {
+                                display: flex;
                                 height: 76.5px;
-                                line-height: 76.5px;
-                                flex: 1;
-                                padding-left: 23px;
+                                justify-content: space-between;
+                                align-items: center;
 
-                                a {
-                                    display: inline-block;
-                                    color: $colorB;
-                                    font-size: 14px;
+                                li {
+                                    height: 76.5px;
+                                    line-height: 76.5px;
+                                    flex: 1;
+                                    padding-left: 23px;
+
+                                    a {
+                                        display: inline-block;
+                                        color: $colorB;
+                                        font-size: 14px;
+                                    }
+
+                                    img {
+                                        vertical-align: middle;
+                                        width: 42px;
+                                        height: 35px;
+                                        margin-right: 15px;
+                                    }
+
                                 }
-
-                                img {
-                                    vertical-align: middle;
-                                    width: 42px;
-                                    height: 35px;
-                                    margin-right: 15px;
-                                }
-
                             }
                         }
                     }
@@ -376,6 +453,109 @@ export default {
                     width: 100%;
                 }
             }
+        }
+
+        .ads-box {
+            @include flex();
+            margin: 14px 0 31px 0;
+            a {
+                width: 296px;
+                height: 167px;
+            }
+        }
+
+        .banner {
+            margin-bottom: 50px;
+        }
+
+        .product-box {
+            background-color: $colorJ;
+            padding: 30px 0 50px;
+
+            h2 {
+                font-size: $fontF;
+                height: 21px;
+                line-height: 21px;
+                color: $colorB;
+                margin-bottom: 20px;
+            }
+            .wrapper {
+                display: flex;
+
+                .banner-left {
+                    margin-right: 16px;
+                    img {
+                        width: 224px;
+                        height: 619px;
+                    }
+                }
+
+                .list-box {
+                    .list {
+                        @include flex();
+                        width: 986px;
+                        margin-bottom: 14px;
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                        .item {
+                            width: 236px;
+                            height: 302px;
+                            background-color: $colorG;
+                            text-align: center;
+                            span {
+                                display: inline-block;
+                                width: 67px;
+                                height: 24px;
+                                font-size: 14px;
+                                line-height: 24px;
+                                color: $colorG;
+                                &.new-pro {
+                                    background-color: #7ECF68;
+                                }
+                                &.kill-pro {
+                                    background-color: #E82626;
+                                }
+                            }
+
+                            .item-img {
+                                img {
+                                    width: 100%;
+                                    height: 195px;
+                                }
+                            }
+                            .item-info {
+                                h3 {
+                                    font-size: $fontJ;
+                                    color: $colorB;
+                                    line-height: $fontJ;
+                                    font-weight: bold;
+                                }
+                                p {
+                                    color: $colorD;
+                                    line-height: 13px;
+                                    margin: 6px auto 13px;
+                                }
+                                .price {
+                                    color: #F20A0A;
+                                    font-size: $fontJ;
+                                    font-weight: 800;
+                                    line-height: 22px;
+                                    cursor: pointer;
+                                    &::after {
+                                        content: '';
+                                        @include bgImg(22px, 22px, '/imgs/icon-cart-hover.png');
+                                        margin-left: 5px;
+                                        vertical-align: middle;
+                                    }
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+
         }
     }
     
