@@ -124,12 +124,24 @@
             </div>    
         </div>
         <service-bar></service-bar>
+        <modal 
+            title="提示" 
+            sureText="查看购物车"
+            btnType="1" 
+            modalType="middle"
+            :showModal="showModal"
+        >
+            <template #body>
+                <p>商品添加成功</p>
+            </template>    
+        </modal>
     </div>
 </template>
 
 <script>
 // this page embed in router-view
 import ServiceBar from './../components/ServiceBar.vue'
+import Modal from './../components/Modal.vue'
 import {Swiper, SwiperSlide, directive} from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 
@@ -137,6 +149,7 @@ export default {
     name: 'index',
 
     components: {
+        Modal,
         ServiceBar,
         Swiper,
         SwiperSlide
@@ -321,6 +334,8 @@ export default {
             ],
 
             phoneList: [],
+
+            showModal: false
         }
     },
 
@@ -333,9 +348,10 @@ export default {
             this.axios.get('/products', {
                 params: {
                     categoryId:100012,
-                    pageSize:8
+                    pageSize:14
                 }
             }).then((res) => {
+                res.list = res.list.slice(6, 14)
                 this.phoneList = [res.list.slice(0, 4), res.list.slice(4, 8)]
             })
         },
