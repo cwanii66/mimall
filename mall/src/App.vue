@@ -17,8 +17,21 @@ export default {
     }
   },
   mounted() {
-    // storage.setItem('abc', {a: 1}, 'user') //test storage
-  }
+    this.getUser()
+    this.getCartCount()
+  },
+  methods: {
+    getUser() {
+      this.axios.get('/user').then(() => {
+        // vuex
+      })
+    },
+    getCartCount() {
+      this.axios.get('/carts/products/sum').then(() => {
+        // vuex
+      })
+    }
+  },
 }
 
 </script>
