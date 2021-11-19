@@ -81,12 +81,12 @@
                     v-for="(item, index) in adsList"
                     :key="index"  
                 >
-                    <img :src="item.img" alt="">
+                    <img v-lazy="item.img" alt="">
                 </a>
             </div>
             <div class="banner">
                 <a href="/#/product/30">
-                    <img src="/imgs/banner-1.png" alt="banner">
+                    <img v-lazy="'/imgs/banner-1.png'" alt="banner">
                 </a>
             </div>
         </div>
@@ -96,7 +96,7 @@
                 <div class="wrapper">
                     <div class="banner-left">
                         <a href="/#/product/35">
-                            <img src="/imgs/mix-alpha.jpg" alt="">
+                            <img v-lazy="'/imgs/mix-alpha.jpg'" alt="">
                         </a>
                     </div>
                     <div class="list-box">
@@ -110,7 +110,7 @@
                             >
                                 <span :class="isNewPhone(itemIndex)">新品</span>
                                 <div class="item-img">
-                                    <img :src="item.mainImage" alt="fake">
+                                    <img v-lazy="item.mainImage" alt="fake">
                                 </div>
                                 <div class="item-info">
                                     <h3> {{ item.name }} </h3>
