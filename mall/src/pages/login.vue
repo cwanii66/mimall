@@ -46,6 +46,8 @@
 
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     name: 'login',
     data() {
@@ -64,9 +66,10 @@ export default {
                 password
             }).then((res) => {
                 this.$cookie.set('userId', res.id), {expires: '1M'};  // 保存特定用户信息
-                // 待做：保存用户名
+                // this.$store.dispatch('saveUserName', res.username);
+                this.saveUserName(res.username)
                 this.$router.push('/index');
-                // console.log(res);
+                
             })
         },
         // register() {
@@ -78,6 +81,7 @@ export default {
         //         alert(res.msg)
         //     })
         // }
+        ...mapActions(['saveUserName'])
     }
 }
 </script>
