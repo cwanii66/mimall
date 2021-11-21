@@ -5,6 +5,13 @@
                 <button class="btn">立即购买</button>
             </template>
         </product-params>
+
+        <div class="h">#####</div>
+        <div class="h">#####</div>
+        <div class="h">#####</div>
+        <div class="h">#####</div>
+        <div class="h">#####</div>
+        <div class="h">#####</div>
         
     </div>
 </template>
@@ -22,6 +29,10 @@ export default {
 </script>
 
 <style lang="scss">
+
+.h {
+    height: 150px;
+}
 
 .product {
     button {

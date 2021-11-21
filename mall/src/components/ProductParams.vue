@@ -1,5 +1,5 @@
 <template>
-    <div class="nav-bar">
+    <div class="nav-bar"  :class="{'is-fixed': isFixed}">
         <div class="container">
             <div class="pro-title">
                 小米8
@@ -18,7 +18,27 @@
 
 <script>
 export default {
-    name: 'nav-bar'
+    name: 'nav-bar',
+    
+    data() {
+        return {
+            isFixed: false,
+
+        }
+    },
+    mounted() {
+        window.addEventListener('scroll', this.initHeight);
+    },
+    methods: {
+        initHeight() {
+            let scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop;
+            this.isFixed = scrollTop > 152 ? true : false;
+        }
+    },
+    destroyed() {
+        // 通过vue组件生命周期去除多余事件
+        window.removeEventListener('scroll', this.initHeight, false);
+    }, 
 }
 </script>
 
@@ -29,7 +49,17 @@ export default {
     .nav-bar {
         height: 70px;
         line-height: 70px;
-        border: 1px solid $colorH;
+        border-top: 1px solid $colorH;
+
+        &.is-fixed {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: $colorG;
+            box-shadow: 0 5px 5px $colorE;
+            z-index: 999;
+        }
+
         .container {
             @include flex();
 
