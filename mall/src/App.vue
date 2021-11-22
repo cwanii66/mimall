@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     getUser() {
-      this.axios.get('/user').then((res = {}) => {
+      this.axios.get('/user').then((res = {}) => { // 未登录 res 为undefined
         this.$store.dispatch('saveUserName', res.username)
       })
     },

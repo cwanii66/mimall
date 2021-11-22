@@ -1,8 +1,8 @@
 <template>
     <div class="product">
-        <product-params>
+        <product-params :title="product.name">
             <template #buy>
-                <button class="btn">立即购买</button>
+                <button class="btn" @click="buyThis">立即购买</button>
             </template>
         </product-params>
 
@@ -44,10 +44,10 @@
                     精准分析视频内容，15个场景智能匹配背景音效。
                 </p>
                 <div class="video-bg" @click="showSlide='slideDown'"></div>
-                <div class="video-box">
-                    <div class="overlay" v-if="showSlide==='slideDown'"></div>
+                <div class="video-box" v-show="showSlide">
+                    <div class="overlay"></div>
                     <div class="video" :class="showSlide">
-                        <span class="icon-close" @click="showSlide='slideUp'"></span>
+                        <span class="icon-close" @click="closeVideo"></span>
                         <video src="/imgs/product/video.mp4" controls="controls" muted autoplay></video>
                     </div>
                 </div>
@@ -91,6 +91,16 @@ export default {
             this.axios.get(`/products/${id}`).then((res) => {
                 this.product = res;
             })
+        },
+        buyThis() {
+            let id = this.$route.params.id;
+            this.$router.push(`/detail/${id}`)
+        },
+        closeVideo() {
+            this.showSlide = 'slideUp';
+            setTimeout(() => {
+                this.showSlide = '';
+            }, 600); //css 无法删掉属性
         }
     },
 
