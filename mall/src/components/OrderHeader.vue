@@ -8,18 +8,23 @@
         <h2>{{title}}<slot name="tips"></slot></h2>
       </div>
       <div class="username fr">
-        <a href="javascript:;">Jack</a>
+        <a href="javascript:;"> {{username}} </a>
       </div>
     </div>   
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
     name: 'order-header',
      props: {
         title: String,
     },
+    computed: {
+      ...mapState(['username'])
+    }
 
 }
 </script>
