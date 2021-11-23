@@ -74,13 +74,8 @@ export default {
         }
     },
 
-    created() {
-
-    },
-
     mounted() {
         this.getProductList();
-
     },
 
     computed: {
