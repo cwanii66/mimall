@@ -21,7 +21,7 @@
         <div class="nav-header">
             <div class="container">
                 <div class="header-logo">
-                    <a href="/#/index" class=""></a>
+                    <a href="/#/index"></a>
                 </div>
                 <div class="header-menu">
                     <div class="item-menu">
@@ -164,33 +164,7 @@ export default {
                 position: relative;
                 height: 112px;
                 @include flex();
-                .header-logo {
-                    display: inline-block;
-                    width: 55px;
-                    height: 55px;
-                    background-color: #FF6600;
-
-                    a {
-                        display: inline-block;
-                        width: 110px;
-                        height: 55px;
-
-                        &::before {
-                            content: ''; // 必须占位
-                            @include bgImg(55px, 55px, '/imgs/mi-logo.png', 55px);
-                            transition: margin-left 200ms linear;
-                        }
-                        &::after {
-                            content: '';
-                            @include bgImg(55px, 55px, '/imgs/mi-home.png', 55px);
-                        }
-                        &:hover::before {
-                            margin-left: -55px;
-                            transition: margin-left 200ms linear;
-                        }
-                    }
-                }
-
+                
                 .header-menu {
                     display: inline-block;
                     width: 643px;

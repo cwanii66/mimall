@@ -6,5 +6,4 @@ export default {
     saveCartCount(context, cartCount) {
         context.commit('saveCartCount', cartCount)
     }
-
 }
