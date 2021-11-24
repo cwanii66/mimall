@@ -2,7 +2,8 @@ import Vue from 'vue'
 import axios from 'axios'
 import VueLazyload from 'vue-lazyload'
 import VueCookie from 'vue-cookie'
-// import VueAxios from 'vue-axios'
+import { Message } from 'element-ui'
+// import 'element-ui/lib/theme-chalk/index.css'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -27,7 +28,7 @@ axios.interceptors.response.use(function(response) {
         }
         return Promise.reject(res)
     } else {
-        alert(res.msg)
+        Message.warning(res.msg)
         return Promise.reject(res)
     }
 })
@@ -40,6 +41,7 @@ Vue.use(VueLazyload, {
 
 Vue.config.productionTip = false
 Vue.prototype.axios = axios
+Vue.prototype.$message = Message // 为原型扩展出一个$message
 
 new Vue({
     router,

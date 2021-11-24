@@ -47,6 +47,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { Message } from 'element-ui'
 
 export default {
     name: 'login',
@@ -72,15 +73,15 @@ export default {
                 
             })
         },
-        // register() {
-        //     this.axios.post('/user/register', {
-        //         username: 'admin1',
-        //         password: 'admin1',
-        //         email: 'admin1@126.com'
-        //     }).then((res) => {
-        //         alert(res.msg)
-        //     })
-        // }
+        register() {
+            this.axios.post('/user/register', {
+                username: 'admin1',
+                password: 'admin1',
+                email: 'admin1@126.com'
+            }).then(() => {
+                Message.success('注册成功')
+            })
+        },
         ...mapActions(['saveUserName'])
     }
 }

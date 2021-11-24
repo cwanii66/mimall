@@ -65,7 +65,7 @@
 import OrderHeader from '../components/OrderHeader.vue'
 import NavFooter from '../components/NavFooter.vue'
 import ServiceBar from '../components/ServiceBar.vue'
-
+import { Message } from 'element-ui'
 
 export default {
     name: 'cart',
@@ -107,13 +107,13 @@ export default {
                 selected = item.productSelected;
             if (type === '-') {
                 if (quantity === 1) {
-                    alert('商品至少保留一件');
+                    Message.info('商品至少保留一件');
                     return;
                 }
                 quantity--;
             } else if (type === '+') {
                 if (quantity >= item.productStock) {
-                    alert('库存不够');
+                    Message.info('库存不够');
                 }
                 quantity++;
             } else {
@@ -130,7 +130,8 @@ export default {
         // 删除购物车商品
         delProduct(item) {
             this.axios.delete(`/carts/${item.productId}`).then((res) => {
-                this.renderData(res);
+              this.$message.success('删除成功'); // 全局插件
+              this.renderData(res);
             })
         },
         // 渲染返回的数据
@@ -144,7 +145,7 @@ export default {
         order() {
             let isEmpty = this.list.every(item => !item.productSelected);
             if (isEmpty) {
-                alert('你TM倒是选一个啊');
+                Message.warning('请选择一件商品');
             } else {
                 this.$router.push('/order/confirm');
             }

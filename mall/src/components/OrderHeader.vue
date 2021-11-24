@@ -5,7 +5,7 @@
         <a href="/#/index"></a>
       </div>
       <div class="title fl">
-        <h2>{{title}}<slot name="tips"></slot></h2>
+        <div>{{title}}<slot name="tips"></slot></div>
       </div>
       <div class="username fr">
         <a href="javascript:;"> {{username}} </a>
@@ -33,6 +33,7 @@ export default {
 
 .order-header {
   padding: 30px 0;
+  border-bottom: 2px solid #FF6600;
     .title, .username {
       display: inline-block;
       height: 55px;
@@ -46,7 +47,7 @@ export default {
         font-size: 14px;
         margin-left: 17px;
         color: #999;
-        font-weight: bold;
+        font-weight: 400;
       }
     }
     .username {
