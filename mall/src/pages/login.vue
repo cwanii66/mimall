@@ -66,10 +66,15 @@ export default {
                 username,
                 password
             }).then((res) => {
-                this.$cookie.set('userId', res.id), {expires: '1M'};  // 保存特定用户信息
+                this.$cookie.set('userId', res.id), {expires: 'Session'}; // 保存特定用户信息
                 // this.$store.dispatch('saveUserName', res.username);
                 this.saveUserName(res.username)
-                this.$router.push('/index');
+                this.$router.push({
+                    name: 'index',
+                    params: {
+                        from: 'login'
+                    }
+                });
                 
             })
         },
