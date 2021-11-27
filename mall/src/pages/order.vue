@@ -33,7 +33,7 @@ export default {
 
     mounted() {
         let path = this.$route.path;
-        if (path === '/order/confirm') {
+        if (path === '/order/confirm') { // 这里的需求仅仅是对navheader组件上的数据进行匹配更新
             this.title = '订单确认';
             this.tip = '请认真填写收货地址'
         } else if (path === '/order/list' ) {
