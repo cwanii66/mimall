@@ -17,7 +17,7 @@ axios.defaults.timeout = 8000
 // axios.defaults.baseURL = env.baseURL
 
 // 接口错误拦截
-axios.interceptors.response.use(function(response) {
+axios.interceptors.response.use((response) => { // 拦截业务异常
     let res =  response.data  // 接口规范，统一固定数据
     let path = location.hash
     if (res.status === 0) {
@@ -31,6 +31,10 @@ axios.interceptors.response.use(function(response) {
         Message.warning(res.msg)
         return Promise.reject(res)
     }
+}, (err) => { // 拦截状态码异常
+    let res = err.response;
+    Message.error(res.data.message);
+    return Promise.reject(err);
 })
 
 Vue.use(axios)

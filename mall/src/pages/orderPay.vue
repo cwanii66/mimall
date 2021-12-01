@@ -7,11 +7,11 @@
                 <div class="icon-succ"></div>
                 <div class="order-info">
                 <h2>订单提交成功！去付款咯～</h2>
-                <p>请在<span>30分</span>内完成支付, 超时后将取消订单</p>
+                <p>请在<span>30分钟</span>内完成支付, 超时后将取消订单</p>
                 <p>收货信息: {{addressInfo}}</p>
                 </div>
                 <div class="order-total">
-                <p>应付总额：<span>2599</span>元</p>
+                <p>应付总额：<span>{{payCount}}</span>元</p>
                 <p>订单详情<em class="icon-down" :class="{'up': showDetail}"  @click="showDetail=!showDetail"></em></p>
                 </div>
             </div>
@@ -54,27 +54,45 @@
         </div>
         </div>
         <scan-pay-code v-if="showPay" @close="closePayModal" :img="payImg"></scan-pay-code>
+        <modal
+            title="支付确认"
+            btnType="3"
+            :showModal="showPayModal"
+            sureText='查看订单'
+            cancelText="未支付"
+            @cancel="showPayModal=false"
+            @submit="goOrderList"
+        >
+            <template #body>
+                <p>您确认是否完成支付 ?</p>
+            </template>
+        </modal>
     </div>
 </template>
 
 <script>
 import QRCode from 'qrcode';
-import ScanPayCode from './../components/ScanPayCode.vue'
+import ScanPayCode from './../components/ScanPayCode.vue';
+import Modal from './../components/Modal.vue';
 
 export default {
     name: 'order-pay',
     components: {
-        ScanPayCode
+        ScanPayCode,
+        Modal
     },
     data() {
         return {
             orderId: this.$route.query.orderNo,
             addressInfo: '', // 收货人地址
+            payCount: '',
             orderDetail: [],// 订单详情，包含商品列表
             showDetail: false, // 是否展示订单详情
             payType: 1, // 支付类型
             showPay: false, // 是否显示微信支付弹框
             payImg: '', // 微信支付二维码地址
+            showPayModal: false, // 是否显示二次支付确认弹框
+            Timer: '', // 定时器id
         }
     },
     created() {
@@ -92,6 +110,7 @@ export default {
                     ${item.receiverDistrict} 
                     ${item.receiverAddress} `;
                 this.orderDetail = res.orderItemVoList;
+                this.payCount = res.payment;
             })
         },
         paySubmit(payType) {
@@ -109,6 +128,7 @@ export default {
                     .then(url => {
                         this.showPay = true;
                         this.payImg = url;
+                        this.loopOrderState();
                     })
                     .catch(() => {
                         this.$message.error('fail');
@@ -118,6 +138,22 @@ export default {
         },
         closePayModal() {
             this.showPay = false;
+            this.showPayModal = true;
+            clearInterval(this.Timer);
+        },
+        // 轮询当前订单支付状态
+        loopOrderState() {
+            this.Timer = setInterval(() => {
+                this.axios.get(`/orders/${this.orderId}`).then((res) => {
+                    if (res.status === 20) {
+                        clearInterval(this.Timer);
+                        this.goOrderList();
+                    }
+                })
+            }, 1000);
+        },
+        goOrderList() {
+            this.$router.push('/order/list');
         }
     },
 
