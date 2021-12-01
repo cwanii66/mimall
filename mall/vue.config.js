@@ -6,9 +6,9 @@ module.exports = {
         proxy: { // intercept and tweet/redirect
             '/api': {
                 target:'http://mall-pre.springboot.cn',
-                changeOrigin: true, //是否将主机头改为目标的url地址
+                changeOrigin: true, //跨域
                 pathRewrite: {
-                    '/api': ''
+                    '/api': '',
                 }
 
             }
