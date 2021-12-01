@@ -203,7 +203,7 @@ export default {
         },
         // 编辑地址弹框
         editAddressModal(item) {
-          this.userAction = 0;
+          this.userAction = 1;
           this.checkedItem = item;  // checkedItem作为数据中间容器
           this.showEditModal = true;
         },
@@ -240,7 +240,8 @@ export default {
                 receiverAddress,
                 receiverZip,
               } = checkedItem;
-              let errMsg = '';
+            let errMsg = '';
+            
               if (!receiverName) {
                 errMsg = '请输入收货人名称';
               } else if (!receiverMobile || !/(^1[3|5|8][0-9]{9}$)/.test(receiverMobile)) {
@@ -297,7 +298,7 @@ export default {
         },
         // 订单提交
         orderSubmit() {
-          let item = this.list[this.checkedId];
+          let item = this.list[this.checkedId];   // 索引定位地址
           let cartCount = this.count;
           if (!item) {
             this.$message.error('请选择一个收货地址');
