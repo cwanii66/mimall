@@ -8,6 +8,7 @@
     <div class="wrapper">
       <div class="container">
         <div class="order-box">
+          <loading v-if="isLoading"></loading>
           <div class="order"
             v-for="order in list"
             :key="order.shippingId"
@@ -51,6 +52,7 @@
               </div>
             </div>
           </div>
+          <no-data v-if="!isLoading && list.length === 0"></no-data>
         </div>
       </div>
     </div>
@@ -58,11 +60,19 @@
 </template>
 
 <script>
+import Loading from './../components/Loading.vue';
+import NoData from './../components/NoData.vue'
+
 export default {
+    components: { 
+      Loading,
+      NoData
+    },
     name: 'order-list',
     
     data() {
         return {
+            isLoading: true,
             list: [],
         }
     },
@@ -73,7 +83,10 @@ export default {
     methods: {
         getOrderList() {
             this.axios.get('/orders').then((res) => {
-                this.list = res.list;
+                this.isLoading = false;
+                this.list = res.list ?? [];
+            }).catch(() => {
+                this.isLoading = false;
             })
         },
         goPay(orderNo) {
