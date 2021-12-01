@@ -47,13 +47,16 @@
               </div>
             </div>
           </div>
-          <el-pagination style="text-align: right"
+          <el-pagination style="text-align: right" v-if="false"
             background
             layout="prev, pager, next"
             :pageSize="pageSize"
             :total="total"
             @current-change = "handleChange"
           ></el-pagination>
+          <div class="load-more">
+            <el-button type="primary" :loading="isLoading" @click="loadMore">加载更多</el-button>
+          </div>
           <no-data v-if="!isLoading && list.length === 0"></no-data>
         </div>
       </div>
@@ -64,21 +67,22 @@
 <script>
 import Loading from './../components/Loading.vue';
 import NoData from './../components/NoData.vue';
-import { Pagination } from 'element-ui';
+import { Pagination, Button } from 'element-ui';
 
 export default {
     name: 'order-list',
     components: { 
       Loading,
       NoData,
-      [Pagination.name]: Pagination
+      [Pagination.name]: Pagination,
+      [Button.name]: Button
     },
     
     data() {
         return {
-            isLoading: true,
+            isLoading: false,
             list: [],
-            pageSize: 10,
+            pageSize: 3,
             pageNum: 1,
             total: 0,
         }
@@ -89,13 +93,15 @@ export default {
 
     methods: {
         getOrderList() {
+            this.isLoading = true;
             this.axios.get('/orders', {
                 params: {
+                    pageSize: this.pageSize,
                     pageNum: this.pageNum
                 }
             }).then((res) => {
                 this.isLoading = false;
-                this.list = res.list ?? [];
+                this.list = this.list.concat(res.list) ?? [];
                 this.total = res.total;
             }).catch(() => {
                 this.isLoading = false;
@@ -118,6 +124,10 @@ export default {
         },
         handleChange(pageNo) {
             this.pageNum = pageNo;
+            this.getOrderList();
+        },
+        loadMore() {
+            this.pageNum++;
             this.getOrderList();
         }
     }
