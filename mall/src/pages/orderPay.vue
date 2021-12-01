@@ -18,7 +18,7 @@
             <div class="item-detail" v-if="showDetail">
                 <div class="item">
                 <div class="detail-title">订单号：</div>
-                <div class="detail-info theme-color">{{orderNo}}</div>
+                <div class="detail-info theme-color">{{orderId}}</div>
                 </div>
                 <div class="item">
                 <div class="detail-title">收货信息：</div>
@@ -53,23 +53,28 @@
             </div>
         </div>
         </div>
-        <!-- <scan-pay-code v-if="showPay"></scan-pay-code> -->
+        <scan-pay-code v-if="showPay" @close="closePayModal" :img="payImg"></scan-pay-code>
     </div>
 </template>
 
 <script>
+import QRCode from 'qrcode';
+import ScanPayCode from './../components/ScanPayCode.vue'
+
 export default {
     name: 'order-pay',
     components: {
-        
+        ScanPayCode
     },
     data() {
         return {
-            orderNo: this.$route.query.orderNo,
+            orderId: this.$route.query.orderNo,
             addressInfo: '', // 收货人地址
             orderDetail: [],// 订单详情，包含商品列表
             showDetail: false, // 是否展示订单详情
             payType: 1, // 支付类型
+            showPay: false, // 是否显示微信支付弹框
+            payImg: '', // 微信支付二维码地址
         }
     },
     created() {
@@ -77,7 +82,7 @@ export default {
     },
     methods: {
         getOrderDetail() {
-            this.axios.get(`/orders/${this.orderNo}`).then((res) => {
+            this.axios.get(`/orders/${this.orderId}`).then((res) => {
                 // 后台返回展示给用户的数据
                 let item = res.shippingVo;
                 this.addressInfo = `${item.receiverName} 
@@ -92,8 +97,27 @@ export default {
         paySubmit(payType) {
             this.payType = payType;
             if (payType === 1) {
-                window.open(`/#/order/alipay?orderId=${this.orderNo}`, '_blank');
+                window.open(`/#/order/alipay?orderId=${this.orderId}`, '_blank');
+            } else {
+                this.axios.post('/pay', {
+                    orderId: this.orderId,
+                    orderName: "cwluvani",
+                    amount: 0.01,
+                    payType: 2
+                }).then((res) => {
+                    QRCode.toDataURL(res.content)
+                    .then(url => {
+                        this.showPay = true;
+                        this.payImg = url;
+                    })
+                    .catch(() => {
+                        this.$message.error('fail');
+                    })
+                })
             }
+        },
+        closePayModal() {
+            this.showPay = false;
         }
     },
 
