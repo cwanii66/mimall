@@ -1,17 +1,12 @@
 <template>
   <div class="order-list">
-    <order-header title="订单列表">
-      <template v-slot:tip>
-        <span>请谨防钓鱼链接或诈骗电话，了解更多></span>
-      </template>
-    </order-header>
     <div class="wrapper">
       <div class="container">
         <div class="order-box">
           <loading v-if="isLoading"></loading>
           <div class="order"
-            v-for="order in list"
-            :key="order.shippingId"
+            v-for="(order, i) in list"
+            :key="i"
           >
             <div class="order-title">
               <div class="item-info fl">
@@ -32,8 +27,8 @@
             <div class="order-content clearfix">
               <div class="good-box fl">
                 <div class="good-list"
-                    v-for="item in order.orderItemVoList"
-                    :key="item.productId"
+                    v-for="(item, index) in order.orderItemVoList"
+                    :key="index"
                 >
                   <div class="good-img">
                     <img v-lazy="item.productImage" alt="">
@@ -52,6 +47,13 @@
               </div>
             </div>
           </div>
+          <el-pagination style="text-align: right"
+            background
+            layout="prev, pager, next"
+            :pageSize="pageSize"
+            :total="total"
+            @current-change = "handleChange"
+          ></el-pagination>
           <no-data v-if="!isLoading && list.length === 0"></no-data>
         </div>
       </div>
@@ -61,19 +63,24 @@
 
 <script>
 import Loading from './../components/Loading.vue';
-import NoData from './../components/NoData.vue'
+import NoData from './../components/NoData.vue';
+import { Pagination } from 'element-ui';
 
 export default {
+    name: 'order-list',
     components: { 
       Loading,
-      NoData
+      NoData,
+      [Pagination.name]: Pagination
     },
-    name: 'order-list',
     
     data() {
         return {
             isLoading: true,
             list: [],
+            pageSize: 10,
+            pageNum: 1,
+            total: 0,
         }
     },
     created() {
@@ -82,9 +89,14 @@ export default {
 
     methods: {
         getOrderList() {
-            this.axios.get('/orders').then((res) => {
+            this.axios.get('/orders', {
+                params: {
+                    pageNum: this.pageNum
+                }
+            }).then((res) => {
                 this.isLoading = false;
                 this.list = res.list ?? [];
+                this.total = res.total;
             }).catch(() => {
                 this.isLoading = false;
             })
@@ -103,6 +115,10 @@ export default {
                     orderNo
                 }
             })
+        },
+        handleChange(pageNo) {
+            this.pageNum = pageNo;
+            this.getOrderList();
         }
     }
 }
