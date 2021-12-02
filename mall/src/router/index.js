@@ -1,18 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../pages/home.vue'
-import Login from '../pages/login.vue'
 import Index from '../pages/index.vue'
-import Product from '../pages/product.vue'
-import Detail from '../pages/detail.vue'
-import Cart from '../pages/cart.vue'
-// import Login from '../pages/login.vue'
-import Order from '../pages/order.vue'
-import OrderComfirm from '../pages/orderConfirm.vue'
-import OrderList from '../pages/orderList.vue'
-import OrderPay from '../pages/orderPay.vue'
-import Alipay from '../pages/alipay.vue'
-
 
 Vue.use(Router)
 
@@ -32,13 +21,13 @@ const routes = [
       {
         path: '/product/:id',   //:id--->dynamic page with id
         name: 'product',
-        component: Product,
+        component: () => import('../pages/product.vue'),
       },
 
       {
         path: '/detail/:id',
         name: 'detail',
-        component: Detail,
+        component: () => import('../pages/detail.vue'),
       }
     ]
   },
@@ -46,39 +35,39 @@ const routes = [
   {
     path: '/cart',
     name: 'cart',
-    component: Cart,
+    component: () => import('../pages/cart.vue'),
   },
 
   {
     path: '/login',
     name: 'login',
-    component: Login
+    component: () => import('../pages/login.vue'),
   },
 
   {
     path: '/order',
     name: 'order',
-    component: Order,
+    component: () => import('../pages/order.vue'),
     children: [
       {
         path: 'list',
         name: 'order-list',
-        component: OrderList,
+        component: () => import('../pages/orderList.vue'),
       },
       {
         path: 'confirm',
         name: 'confirm',
-        component: OrderComfirm,
+        component: () => import('../pages/orderConfirm.vue'),
       },
       {
         path: 'pay',
         name: 'order-pay',
-        component: OrderPay,
+        component: () => import('../pages/orderPay.vue'),
       },
       {
         path: 'alipay',
         name: 'alipay',
-        component: Alipay,
+        component: () => import('../pages/alipay.vue'),
       }
     ]
   },

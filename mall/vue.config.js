@@ -1,3 +1,7 @@
+/**
+ * @type {import('@vue/cli-service').ProjectOptions}
+ */
+
 module.exports = {
     // node.js knowledge(about config)
     devServer: {
@@ -13,5 +17,10 @@ module.exports = {
 
             }
         }
+    },
+    lintOnSave: true,
+    productionSourceMap: true,
+    chainWebpack: config => {
+        config.plugins.delete('prefetch'); // 删除预加载，确保真正按需加载
     }
 }
